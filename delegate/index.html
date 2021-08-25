@@ -1,0 +1,42 @@
+<!--Делегирование - обработка дочерних элементов в одном родительском-->
+
+<div id="list">
+    <div class="item">
+        <div class="tittle">
+            test
+        </div>
+        <button class="close">
+            [X]
+        </button>
+    </div>
+
+</div>
+
+<button id="btn">
+    add to list
+</button>
+
+
+<script>
+    const list= document.querySelector('#list')
+    const btn= document.querySelector('#btn')
+
+    list.addEventListener('click', (event) =>{
+        const item = event.target
+        if(item.className==='close'){
+            item.closest('.item').remove()
+        }
+    })
+
+    btn.addEventListener('click',()=>{
+        const newItem = document.createElement('div')
+        const html =
+            ` <div class="item">
+                 <div>test</div>
+                 <button class="close">[X]</button>
+              </div>`
+        newItem.innerHTML = html
+        list.appendChild(newItem)
+    })
+
+</script>

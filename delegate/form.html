@@ -1,0 +1,48 @@
+<form>
+    <input name="email" type="text" placeholder="enter email">
+    <input name="number" type="text" placeholder="enter number">
+    <input name="number" type="text" placeholder="enter phone">
+    <button type="submit">submit</button>
+</form>
+
+<script>
+    const form = document.querySelector('form')
+    const errors = []
+
+    form.addEventListener('input', (event) => {
+        validate(event.target)
+    })
+    form.addEventListener('submit', (event) => {
+        errors.length = 0
+        event.preventDefault()
+        event.target.childNodes.forEach(input => {
+            if (input.tagName === 'INPUT') {
+                if (!validate(input)){
+                    errors.push(validate(input))
+                }
+
+            }
+        })
+        if (!errors.length > 0) {
+            const formData = new FormData(form)
+            alert(JSON.stringify(Object.fromEntries(formData)));
+
+        }
+    })
+
+    function validate(input) {
+        const validateEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        const validateNumber = /^\d+( \d+)*$/;
+        if (!input.value
+            || (input.name === 'email' && !validateEmail.test(input.value))
+            || (input.name === 'number' && !validateNumber.test(input.value))
+        ) {
+            input.style.borderColor = 'red'
+            return false
+        } else {
+            input.style.borderColor = 'gray'
+            return true
+        }
+
+    }
+</script>
